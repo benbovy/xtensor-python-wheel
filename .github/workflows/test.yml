@@ -1,0 +1,44 @@
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+name: Test
+
+jobs:
+  check-links:
+    name: Example
+    runs-on: "ubuntu-latest"
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Build and Install xtl wheel
+      run: |
+        cd xtl
+        python -m pip install . -v
+
+    - name: Build and Install xtensor wheel
+      run: |
+        cd xtensor
+        python -m pip install . -v
+
+    - name: Build and Install xtensor-python wheel
+      run: |
+        cd xtensor-python
+        python -m pip install . -v
+
+    - name: Build and Install example
+      run: |
+        cd tests/packages/example
+        python -m pip install . -v
+
+    - name: Run Example
+      run: |
+        python -c 'import example; import numpy as np; np.testing.assert_equal(example.add([1, 2], 3), [4, 5]);'

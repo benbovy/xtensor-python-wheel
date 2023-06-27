@@ -1,2 +1,3 @@
-# xtensor-python-wheel
-A PyPI wheel for xtensor-python
+# xtensor-stack python wheels
+
+Recipes for xtensor-stack PyPI wheels.
